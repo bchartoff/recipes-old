@@ -1,6 +1,6 @@
 ##Rick Bayless's original recipe##
 
-4 medium (about 1 oz. total) dried guajillo chiles, stemmed, seeded & torn into flat pieces*
+4 medium (about 1 oz. total) dried guajillo chiles, stemmed, seeded & torn into flat pieces
 2 fat garlic cloves, peeled and quartered
 1 28-oz. can diced tomatoes in juice (preferably fire-roasted)
 1/4 tsp. ground cumin
