@@ -1,19 +1,19 @@
 ##Rick Bayless's original recipe##
 
-4 medium (about 1 oz. total) dried guajillo chiles, stemmed, seeded & torn into flat pieces
-2 fat garlic cloves, peeled and quartered
-1 28-oz. can diced tomatoes in juice (preferably fire-roasted)
-1/4 tsp. ground cumin
-1/4 tsp. ground black pepper
-1 Tbsp. canola oil, plus extra for the tortillas
-2 cups chicken broth
-12 corn tortillas*
-salt
-1/2 tsp. sugar
-2 generous cups (about 8 oz.) coarsely shredded cooked chicken
-1 cup (4 oz.) shredded Mexican melting cheese like Chihuahua, quesadilla, or asadero
-1 small white onion, cut into rings, for garnish (optional)
-Cilantro, for garnish (optional)
+- 4 medium (about 1 oz. total) dried guajillo chiles, stemmed, seeded & torn into flat pieces
+- 2 fat garlic cloves, peeled and quartered
+- 1 28-oz. can diced tomatoes in juice (preferably fire-roasted)
+- 1/4 tsp. ground cumin
+- 1/4 tsp. ground black pepper
+- 1 Tbsp. canola oil, plus extra for the tortillas
+- 2 cups chicken broth
+- 12 corn tortillas
+- salt, to taste
+- 1/2 tsp. sugar
+- 2 generous cups (about 8 oz.) coarsely shredded cooked chicken
+- 1 cup (4 oz.) shredded Mexican melting cheese like Chihuahua, quesadilla, or asadero
+- 1 small white onion, cut into rings, for garnish (optional)
+- Cilantro, for garnish (optional)
 
 Preheat the oven to 350. Set a small or medium skillet over medium heat and once it’s hot, toast the chile pieces a few at a time, pressing them against the hot surface with a spatula until aromatic and lightened in color underneath–about 10 seconds per side.  Transfer the toasted chiles to a blender, and add the garlic, tomatoes and juices, cumin and black pepper. Blend to as smooth a consistency as possible.
 
