@@ -13,13 +13,39 @@
   * html .ui-autocomplete {
     height: 100px;
   }
+
+  #new_ingredient{
+    position: fixed;
+    left: 5%;
+    top: 5%;
+    background: white;
+    -webkit-box-shadow: 0px 3px 32px 8px rgba(51,51,51,1);
+    -moz-box-shadow: 0px 3px 32px 8px rgba(51,51,51,1);
+    box-shadow: 0px 3px 32px 8px rgba(51,51,51,1);
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+  }
+  #new_ingredient_bg{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(51,51,51,.8);
+    z-index: 9;
+    pointer-events: none;
+    opacity: 0;
+  }
   </style>
 </head>
 <body>
 <script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='jquery.ui.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='jquery-ui.css') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='units.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='testTags.js') }}"></script>
+
 <!-- <script type=text/javascript src="{{ url_for('static', filename='units.js') }}"></script> -->
 <script type=text/javascript src="{{ url_for('static', filename='d3.min.js') }}"></script>
 
@@ -29,10 +55,13 @@
 <script type=text/javascript>
 
   $(function() {
-    var availableTags = testTags
-    // $( 'input[name="a"]' ).autocomplete({
-    //   source: availableTags
-    // });
+    var unitNames = units.map(function(unit){return unit.name})
+    $( 'input[name="unit"]' ).autocomplete({
+      source: unitNames
+    });
+    $( 'input[name="ingredient"]' ).autocomplete({
+      source: testTags
+    });
     $('a#addIngredient').bind('click', function() {
       $.getJSON($SCRIPT_ROOT + '/add', {
         amount: $('input[name="amount"]').val(),
@@ -40,14 +69,82 @@
         ingredient: $('input[name="ingredient"]').val()
       }, function(data) {
         // var oldText = $("#ingredient-list").text();
+        if(testTags.indexOf(data.ingredient) == -1){
+          d3.selectAll(".new_ingredient")
+            .style("pointer-events","visible")
+            .transition()
+            .duration(500)
+            .style("opacity",1);
+        }
+        var tspEquiv = data.amount * units.filter(function(obj){return obj.name == data.unit})[0].tspEquiv
         d3.select("#ingredient-list")
         .append('li')
-        .text(data.result)
+        .text(niceUnits(tspEquiv) + " " + data.ingredient)
       });
       return false;
     });
   });
+
+  function niceUnits(tspEquiv){
+      var tblspEquiv;
+      if(tspEquiv < 3){ return tspEquiv + " teaspoon" + plural(tspEquiv);}
+      else{
+        tblspEquiv = parseFloat(tspEquiv)/3.0;
+        if (tblspEquiv < 4){
+          var remainder = (tspEquiv%3 == 0) ? "" : " and " + niceUnits(tspEquiv%3)
+          return Math.floor(tblspEquiv) + " tablespoon" + plural(Math.floor(tblspEquiv)) + remainder;
+        } else{ 
+          cupEquiv = parseFloat(tblspEquiv/16.0);
+        }
+        if((cupEquiv * 4)%1==0){
+          var base = (Math.floor(cupEquiv) == 0) ? "" : Math.floor(cupEquiv);
+          var remainder;
+          switch(cupEquiv - base){
+            case .25:
+              remainder = '\u00BC';
+              break;
+            case .5:
+              remainder = '\u00BD';
+              break;
+            case .75:
+              remainder = '\u00BE';
+              break;
+            case 0:
+              remainder = "";
+              break;
+          }
+          return base + remainder + " cup" + plural(cupEquiv)
+        }
+        else if((cupEquiv * 3)%1==0){
+          var base = (Math.floor(cupEquiv) == 0) ? "" : Math.floor(cupEquiv);
+          var remainder = (cupEquiv - base < .4) ? '\u2153' : '\u2154'; //unicode 1/3 and 2/3, respectively
+          return base + remainder + " cup" + plural(cupEquiv)
+        } else{
+          var quarterRemainder = niceUnits(tspEquiv%12)
+          var thirdRemainder = (tspEquiv%16 < 16 && tspEquiv%16 > 12) ? "and" : niceUnits(tspEquiv%16)
+
+          if(quarterRemainder.indexOf("and") != -1 && thirdRemainder.indexOf("and") == -1){
+            return niceUnits(tspEquiv - tspEquiv%16) + " and " + thirdRemainder;
+          }
+          else if(quarterRemainder.indexOf("and") == -1 && thirdRemainder.indexOf("and") != -1){
+            return niceUnits(tspEquiv - tspEquiv%12) + " and " + quarterRemainder;
+          } else{
+            return niceUnits(tspEquiv - tspEquiv%12) + " and " + quarterRemainder;
+          }
+        }
+      }
+
+      function plural(unit){
+        if (unit == 1 || unit < 1) {return ""}
+        else{ return "s"}
+      }
+
+
+  }
+
 </script>
+<div id = "new_ingredient_bg" class = "new_ingredient"></div>
+<iframe id = "new_ingredient" class = "new_ingredient" src="/new_ingredient" frameborder="0" height="90%" width="90%" marginheight="0" scrolling="no"></iframe>
 <h1>Add a new recipe</h1>
 <div id = "ingredients">
    <input type=text name="amount"></input>

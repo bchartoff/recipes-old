@@ -19,11 +19,23 @@ def build_ingredient():
     ingredient = request.args.get('ingredient', '', type=str)
     # cw = csv.writer(open("new.csv","wb"))
     # cw.writerow([amount,unit])
-    return jsonify(result=amount + " " + unit + " " + ingredient)
+    def parseAmount(amount):
+		if(amount.find("/") == -1):
+			return float(amount)
+		else:
+			nom = float(amount.split("/")[0])
+			denom = float(amount.split("/")[1])
+			return nom/denom
+
+    return jsonify(amount=parseAmount(amount), unit=unit, ingredient=ingredient, result=amount + " " + unit + " " + ingredient)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/new_ingredient')
+def new_ingredient():
+    return render_template('new_ingredient.html')
 
 if __name__ == '__main__':
 	app.run()

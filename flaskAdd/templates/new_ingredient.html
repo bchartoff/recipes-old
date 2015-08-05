@@ -1,0 +1,47 @@
+<html>
+<head>
+  <style>
+  .ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 100px;
+  }
+  </style>
+</head>
+<body>
+<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='jquery.ui.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='jquery-ui.css') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='units.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='testTags.js') }}"></script>
+
+<!-- <script type=text/javascript src="{{ url_for('static', filename='units.js') }}"></script> -->
+<script type=text/javascript src="{{ url_for('static', filename='d3.min.js') }}"></script>
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<h1>NEW THINGS</h1>
+<div id = "ingredients">
+   <input type=text name="amount"></input>
+   <input type=text name="unit"></input>
+   <input type=text name="ingredient"></input>
+
+<!--    <input type=text size=5 name=a> +
+   <input type=text size=5 name=b> = -->
+</div>
+   <a href=# id="addIngredient">Add ingredient</a>
+
+   <ul id="ingredient-list"></ul>
+
+
+</html>
+</body>
