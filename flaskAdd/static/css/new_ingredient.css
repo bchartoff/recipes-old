@@ -1,0 +1,76 @@
+body{
+	font-family: Lato;
+}
+*:focus{
+	outline: 0;
+}
+p{
+	font-weight: 700;
+	font-size: 34px;
+	color: #333;
+	margin: 0 auto;
+	margin-top: 20%;
+	width: 100%;
+	text-align: center;
+}
+input{
+    width: 200px;
+    height: 40px;
+    border: 5px solid #333;
+    font-size: 18px;
+    margin-top: 10%;
+    margin-right: 10px;
+    text-align: center;
+}
+#inputContainer{
+	width: 200px;
+	margin: 0 auto;
+}
+#tomato{
+	position: fixed;
+    width: 40%;
+    opacity: .2;
+    z-index: -1;
+    left: 20%;
+    top: 34%;
+}
+#orange{
+    position: fixed;
+    width: 40%;
+    opacity: .2;
+    z-index: -2;
+    left: 40%;
+    top: 14%;
+}
+#tomato2{
+	position: fixed;
+    width: 40%;
+    opacity: .2;
+    z-index: -1;
+    left: 60%;
+    top: 4%;
+}
+#orange2{
+    position: fixed;
+    width: 40%;
+    opacity: .2;
+    z-index: -2;
+    left: 10%;
+    top: 54%;
+}
+#tomato3{
+	position: fixed;
+    width: 40%;
+    opacity: .2;
+    z-index: -1;
+    left: 80%;
+    top: 24%;
+}
+#orange3{
+    position: fixed;
+    width: 40%;
+    opacity: .2;
+    z-index: -2;
+    left: 30%;
+    top: 74%;
+}

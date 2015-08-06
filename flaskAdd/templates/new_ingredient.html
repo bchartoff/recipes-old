@@ -18,9 +18,13 @@
 <body>
 <script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='jquery.ui.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='d3.min.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='jquery-ui.css') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/new_ingredient.css') }}"></script>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <script type=text/javascript src="{{ url_for('static', filename='units.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='testTags.js') }}"></script>
+<!-- <script type=text/javascript src="{{ url_for('static', filename='ingredients.csv') }}"></script> -->
 
 <!-- <script type=text/javascript src="{{ url_for('static', filename='units.js') }}"></script> -->
 <script type=text/javascript src="{{ url_for('static', filename='d3.min.js') }}"></script>
@@ -28,12 +32,60 @@
 <script type=text/javascript>
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
+<script type=text/javascript>
 
-<h1>NEW THINGS</h1>
+  $(function() {
+    d3.text("static/ingredients.csv", function(data) {
+      var rows = d3.csv.parse(data);
+      var categories = rows.map(function(obj){return obj.category})
+      var ingredients = rows.map(function(obj){return obj.ingredient})
+      var subingredients = rows.map(function(obj){return obj.subingredient})
+// switch this behavior to d3.csv.parse that returns
+// [
+//   {"Year": "1997", "Make": "Ford", "Model": "E350", "Length": "2.34"},
+//   {"Year": "2000", "Make": "Mercury", "Model": "Cougar", "Length": "2.38"}
+// ]
+//and switch csv structure to 3 columns, category, ingredient, subingredient
+
+      $( 'input[name="category"]' ).autocomplete({
+        source: categories
+      });
+      $( 'input[name="ingredient"]' ).autocomplete({
+        source: ingredients
+      });
+      $( 'input[name="subingredient"]' ).autocomplete({
+        source: subingredients
+      });
+      $('a#addIngredient').bind('click', function() {
+        $.getJSON($SCRIPT_ROOT + '/add_new_ingredient', {
+          category: $('input[name="category"]').val(),
+          ingredient: $('input[name="ingredient"]').val(),
+          subingredient: $('input[name="subingredient"]').val()
+        }, function(resp) {
+          console.log(resp)
+          parent.hideIframe();
+        }
+        );
+        return false;
+      });
+    });
+  });
+</script>
+
+<p>That ingredient isn't in the database, yet.</p>
 <div id = "ingredients">
-   <input type=text name="amount"></input>
-   <input type=text name="unit"></input>
-   <input type=text name="ingredient"></input>
+<img id = "tomato" src="{{ url_for('static', filename='images/tomato.png') }}"/>
+<img id = "orange" src="{{ url_for('static', filename='images/orange.png') }}"/>
+<img id = "tomato2" src="{{ url_for('static', filename='images/tomato.png') }}"/>
+<img id = "orange2" src="{{ url_for('static', filename='images/orange.png') }}"/>
+<img id = "tomato3" src="{{ url_for('static', filename='images/tomato.png') }}"/>
+<img id = "orange3" src="{{ url_for('static', filename='images/orange.png') }}"/>
+
+<div id = "inputContainer">
+   <input type=text name="category" placeholder="Category"></input>
+   <input type=text name="ingredient" placeholder="Ingredient"></input>
+   <input type=text name="subingredient" placeholder="Subingredient"></input>
+</div>
 
 <!--    <input type=text size=5 name=a> +
    <input type=text size=5 name=b> = -->

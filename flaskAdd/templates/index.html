@@ -55,35 +55,58 @@
 <script type=text/javascript>
 
   $(function() {
-    var unitNames = units.map(function(unit){return unit.name})
-    $( 'input[name="unit"]' ).autocomplete({
-      source: unitNames
-    });
-    $( 'input[name="ingredient"]' ).autocomplete({
-      source: testTags
-    });
-    $('a#addIngredient').bind('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/add', {
-        amount: $('input[name="amount"]').val(),
-        unit: $('input[name="unit"]').val(),
-        ingredient: $('input[name="ingredient"]').val()
-      }, function(data) {
-        // var oldText = $("#ingredient-list").text();
-        if(testTags.indexOf(data.ingredient) == -1){
-          d3.selectAll(".new_ingredient")
-            .style("pointer-events","visible")
-            .transition()
-            .duration(500)
-            .style("opacity",1);
-        }
-        var tspEquiv = data.amount * units.filter(function(obj){return obj.name == data.unit})[0].tspEquiv
-        d3.select("#ingredient-list")
-        .append('li')
-        .text(niceUnits(tspEquiv) + " " + data.ingredient)
+    d3.text("static/ingredients.csv", function(data) {
+      var rows = d3.csv.parse(data);
+      // var categories = rows[0]
+      // var ingredients = rows[1]
+      var subingredients = rows.map(function(obj){return obj.subingredient})
+      var unitNames = units.map(function(unit){return unit.name})
+      $( 'input[name="unit"]' ).autocomplete({
+        source: unitNames
       });
-      return false;
+      $( 'input[name="subingredient"]' ).autocomplete({
+        source: subingredients
+      });
+      $('a#addIngredient').bind('click', function() {
+        $.getJSON($SCRIPT_ROOT + '/add', {
+          amount: $('input[name="amount"]').val(),
+          unit: $('input[name="unit"]').val(),
+          subingredient: $('input[name="subingredient"]').val()
+        }, function(data) {
+          if(subingredients.indexOf(data.subingredient) == -1){
+            d3.selectAll(".new_ingredient")
+              .style("pointer-events","visible")
+              .transition()
+              .duration(500)
+              .style("opacity",1);
+          }
+          var tspEquiv = data.amount * units.filter(function(obj){return obj.name == data.unit})[0].tspEquiv
+          d3.select("#ingredient-list")
+          .append('li')
+          .text(niceUnits(tspEquiv) + " " + data.subingredient)
+        });
+        return false;
+      });
     });
   });
+
+  function hideIframe(){
+    d3.selectAll(".new_ingredient")
+      .style("pointer-events","none")
+      .transition()
+      .duration(500)
+      .style("opacity",0);
+      setTimeout(function(){
+          d3.text("{{ url_for('static', filename='ingredients.csv') }}", function(data) {
+            var rows = d3.csv.parse(data);
+            var subingredients = rows.map(function(obj){return obj.subingredient})
+            console.log(subingredients)
+            $( 'input[name="subingredient"]' ).autocomplete({
+               source: subingredients
+            });
+          });
+      },500);
+  }
 
   function niceUnits(tspEquiv){
       var tblspEquiv;
@@ -149,7 +172,7 @@
 <div id = "ingredients">
    <input type=text name="amount"></input>
    <input type=text name="unit"></input>
-   <input type=text name="ingredient"></input>
+   <input type=text name="subingredient"></input>
 
 <!--    <input type=text size=5 name=a> +
    <input type=text size=5 name=b> = -->
