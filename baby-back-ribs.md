@@ -1,4 +1,4 @@
-##Baby Back Ribs
+## Baby Back Ribs
 
 - Full rack(s) baby back ribs
 - ~ 1 T olive oil per rack, or less
@@ -14,7 +14,7 @@
 - BBQ sauce, I used [stonewall kitchen](http://www.stonewallkitchen.com/shop/speciality-foods/grille-sauces-marinades/131149.html). Tomato based, not too much sugar, ideally no HFCS
 - Spray bottle filled with 3/4 apple cider vinegar, 1/4 apple juice
 
-##Electric smoker, 9/7/2015, trial 1
+## Electric smoker, 9/7/2015, trial 1
 Preheat smoker to 275. Place water pan in bottom of smoker, load wood chips, and place 1 metal rack in the smoker for each rack of ribs you are preparing.
 
 **Every 30 minutes or so, add more wood chips to keep the smoke going (less important while ribs are wrapped).**
